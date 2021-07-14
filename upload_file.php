@@ -63,7 +63,7 @@ $pathInS3 = 'https://s3.us-east-2.amazonaws.com/' . $bucketName . '/' . $keyName
 // Add it to S3
 try {
 	// Uploaded:
-	$file = realpath(dirname(__FILE__))."\\".$keyName;
+	$file = realpath(dirname(__FILE__))."/".$keyName;
 
 
 	$s3->putObject(
