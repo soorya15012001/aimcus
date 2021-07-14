@@ -4,6 +4,15 @@ require '../vendor/autoload.php';
 use Aws\S3\S3Client;
 use Aws\S3\Exception\S3Exception;
 
+function my_curl_fun($url) {
+ $ch = curl_init();
+ curl_setopt($ch, CURLOPT_URL, $url);
+ curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
+ $data = curl_exec($ch);
+ curl_close($ch);
+ return $data;
+}
+
 
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
@@ -74,11 +83,12 @@ try {
 }
 
 
-$url = "https://c09d96g177.execute-api.us-east-2.amazonaws.com/default/audio_test";
-$data = file_get_contents($url); // put the contents of the file into a variable
-$characters = json_decode($data, true); // decode the JSON feed
 
 try {
+	$url = "https://c09d96g177.execute-api.us-east-2.amazonaws.com/default/audio_test";
+	$data = my_curl_fun($url);
+	// $data = file_get_contents($url); 	// put the contents of the file into a variable
+	// $characters = json_decode($data, true); // decode the JSON feed
 	echo $data; 
 } catch (Exception $e) {
 	echo "Refresh page and try again";
