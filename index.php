@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+<script src='https://code.responsivevoice.org/responsivevoice.js'>
+</script>
 
 <html>
 <head>
@@ -135,8 +137,44 @@
               url: 'upload_file.php',
               data: fd,
               dataType: 'text'
-            }).done(function(data) {
-                document.write("<h1>"+data+"</h1>");
+            }).done(function(obj) {
+                document.write("<h1>"+obj+"</h1>");
+                var txt = "";
+                const data = JSON.parse(obj);
+                                
+                if(data["intent"] === "greeting"){
+                	txt = "hello user how can I help you"
+					responsiveVoice.speak(txt);
+                }
+                else if(data["intent"] === "bookBuy"){
+                	txt = "yes we do have "+data["value"]+"book"
+					responsiveVoice.speak(txt);
+                }
+                else if(data["intent"] === "bookName"){
+                	txt = "There are many books present in the database. Try saying a particular name."
+					responsiveVoice.speak(txt);
+                }	
+                else if(data["intent"] === "bookPrice"){
+                	txt = "yes we do have "+data["value"]+"book and it costs "+data["data"]+"rupees"
+					responsiveVoice.speak(txt);
+                }               
+                else if(data["intent"] === "buy"){
+                	txt = "You are buying "+data["value"]+"book and it costs "+data["price"]+"rupees"
+					responsiveVoice.speak(txt);
+                }
+                else if(data["intent"] === "follow"){
+                	txt = "Now you are following"+data["value"]
+					responsiveVoice.speak(txt);
+                }
+                else if(data["intent"] === "friendlist"){
+                	txt = "Wow you have got lots of friends"
+					responsiveVoice.speak(txt);
+                }
+                else{
+                	txt = "sorry I did not understand you"
+					responsiveVoice.speak(txt);
+                }
+
 
             });
           };
